@@ -56,9 +56,11 @@ public class Interface {
 
     public void addTask (){
         while (true) {
+            System.out.println("");
             System.out.print("\nEnter a task to add or 'exit' to finish: ");
-            String task = scan.nextLine();
-    
+            String task = scan.next();
+            scan.nextLine(); 
+            
             if (task.equalsIgnoreCase("exit")) {
                 break;
             } else if (tasks.contains(task)) {
@@ -67,10 +69,11 @@ public class Interface {
                 tasks.add(task);
                 completionStatus = new boolean[tasks.size()];
                 
-                System.out.println("The task has been added: " + task);
+                System.out.print("The task has been added: " + task);
+                
             }
         }
-        tasks.remove(0); // removes the extra task item added at the beginning
+        
     }
     
     public void removeTask (){
@@ -111,7 +114,7 @@ public class Interface {
             System.out.println("---------------------------");
             System.out.println("\nYour Current To-Do-List: \n");
             int i = 1;
-            
+        
             for (int j = 0; j < tasks.size(); j++) {
                 String task = tasks.get(j);
                 String status = completionStatus[j] ? completeSymbol : notCompleteBox;
