@@ -1,4 +1,9 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Interface {
@@ -6,12 +11,14 @@ public class Interface {
     private Scanner scan = new Scanner(System.in);
     private ArrayList<String> tasks;
     private boolean[] completionStatus;
-    
+    private static final String FILE_NAME = "ToDoList.txt";
+
 
     public Interface() {
 
         completionStatus = new boolean[0];
         tasks = new ArrayList<>();
+        loadToDoList();
     }
 
     public void menu (){
@@ -25,9 +32,9 @@ public class Interface {
             System.out.println("2. Add Task");
             System.out.println("3. Delete Task");
             System.out.println("4. Mark Task as Complete");
-            System.out.println("5. Exit");
+            System.out.println("5. Exit and Save");
             int choice = scan.nextInt();
-
+            
             switch (choice) {
                 case 1:
                     viewTasks();
@@ -42,6 +49,7 @@ public class Interface {
                     markComplete();
                     break;
                 case 5:
+                    saveToDoList();
                     System.err.println("Bye :)");
                     System.exit(0);
                     break;
@@ -157,6 +165,34 @@ public class Interface {
                 System.out.println("Invalid task number.");
             }
     
+        }
+    }
+
+    private void loadToDoList() {
+        try {
+            Path filePath = Paths.get(FILE_NAME);
+            List<String> lines = Files.readAllLines(filePath);
+
+            // Assuming the completion status is stored as "true" or "false" in the file
+            completionStatus = new boolean[lines.size()];
+            tasks = new ArrayList<>(lines);
+
+        } catch (IOException e) {
+            // If the file doesn't exist or there is an error reading, ignore and start with an empty list
+            System.out.println("No existing to-do list found. Starting with an empty list.");
+            tasks = new ArrayList<>();
+            completionStatus = new boolean[0];
+        }
+    }
+
+    private void saveToDoList() {
+        try {
+            Path filePath = Paths.get(FILE_NAME);
+            Files.write(filePath, tasks);
+
+        } catch (IOException e) {
+            System.out.println("Error saving the to-do list.");
+            e.printStackTrace();
         }
     }
        
