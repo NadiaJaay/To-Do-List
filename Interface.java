@@ -11,7 +11,7 @@ public class Interface {
     private Scanner scan = new Scanner(System.in);
     private ArrayList<String> tasks;
     private boolean[] completionStatus;
-    private static final String FILE_NAME = "ToDoList.txt";
+    private static final String fileName = "ToDoList.txt";
 
 
     public Interface() {
@@ -170,7 +170,7 @@ public class Interface {
 
     private void loadToDoList() {
         try {
-            Path filePath = Paths.get(FILE_NAME);
+            Path filePath = Paths.get(fileName);
             List<String> lines = Files.readAllLines(filePath);
 
             // Assuming the completion status is stored as "true" or "false" in the file
@@ -179,7 +179,7 @@ public class Interface {
 
         } catch (IOException e) {
             // If the file doesn't exist or there is an error reading, ignore and start with an empty list
-            System.out.println("No existing to-do list found. Starting with an empty list.");
+            System.out.println("No existing To-Do List, creating an empty list.");
             tasks = new ArrayList<>();
             completionStatus = new boolean[0];
         }
@@ -187,11 +187,11 @@ public class Interface {
 
     private void saveToDoList() {
         try {
-            Path filePath = Paths.get(FILE_NAME);
+            Path filePath = Paths.get(fileName);
             Files.write(filePath, tasks);
 
         } catch (IOException e) {
-            System.out.println("Error saving the to-do list.");
+            System.out.println("Error saving the To-Do List.");
             e.printStackTrace();
         }
     }
