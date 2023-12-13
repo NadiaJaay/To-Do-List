@@ -173,12 +173,10 @@ public class Interface {
             Path filePath = Paths.get(fileName);
             List<String> lines = Files.readAllLines(filePath);
 
-            // Assuming the completion status is stored as "true" or "false" in the file
             completionStatus = new boolean[lines.size()];
             tasks = new ArrayList<>(lines);
 
         } catch (IOException e) {
-            // If the file doesn't exist or there is an error reading, ignore and start with an empty list
             System.out.println("No existing To-Do List, creating an empty list.");
             tasks = new ArrayList<>();
             completionStatus = new boolean[0];
